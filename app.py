@@ -10,6 +10,10 @@ app = Flask(__name__)
 user_name = ""
 flag = 1
 
+@app.route("/joke",methods=["GET","POST"])
+def joke():
+    return(render_template("joke.html"))
+
 @app.route("/",methods=["GET","POST"])
 def index():
     global flag
