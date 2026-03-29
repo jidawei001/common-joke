@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendulum Graph</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: inline-block;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Pendulum Period vs Length</h2>
+        <p>This graph shows how the pendulum period changes with length.</p>
+        <img src="{{ url_for('static', filename=graph) }}" alt="Pendulum Graph">
+        <br>
+        <a href="/main">Back to Assistant</a>
+    </div>
+</body>
+</html>

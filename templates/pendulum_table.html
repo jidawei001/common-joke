@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendulum Data Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: inline-block;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        a {
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Automatically Generated Pendulum Data Table</h2>
+        {% if error %}
+            <p style="color:red;">Error: {{ error }}</p>
+        {% else %}
+            <p>Gravity = {{ g }} m/s²</p>
+            <table>
+                <tr><th>Length L (m)</th><th>Period T (s)</th></tr>
+                {% for L, T in data %}
+                    <tr><td>{{ L }}</td><td>{{ T }}</td></tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        <a href="/main">Back to Main Page</a>
+    </div>
+</body>
+</html>

@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request
+import matplotlib.pyplot as plt
 import math
+import numpy as np
+
 
 #  Gemini API 相关导入
 from google import genai
@@ -17,6 +20,45 @@ client = genai.Client(api_key=GOOGLE_API_KEY)
 
 app = Flask(__name__)
 
+@app.route("/pendulum_graph", methods=["POST"])
+def pendulum_graph():
+    g = float(request.form.get("g"))
+    L_values = np.linspace(0.1, 2.0, 50)  # 长度从0.1m到2.0m
+    T_values = 2 * np.pi * np.sqrt(L_values / g)
+
+    # 保存图像到 static 文件夹
+    filepath = "static/pendulum_graph.png"
+    plt.figure()
+    plt.plot(L_values, T_values, label="T = 2π√(L/g)")
+    plt.xlabel("Length L (m)")
+    plt.ylabel("Period T (s)")
+    plt.title("Pendulum Period vs Length")
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(filepath)
+    plt.close()
+
+    # 跳转到新页面 pendulum_graph.html
+    return render_template("pendulum_graph.html", graph="pendulum_graph.png")
+
+@app.route("/pendulum_table", methods=["POST"])
+def pendulum_table():
+    try:
+        g = float(request.form.get("g"))
+        if g <= 0:
+            raise ValueError("g must be positive")
+
+        # 生成摆长序列：0.1m 到 2.0m，共 10 个数据点
+        L_values = np.linspace(0.1, 2.0, 10)
+        T_values = 2 * np.pi * np.sqrt(L_values / g)
+
+        # 将结果打包为 (L, T) 对
+        data = [(round(L, 2), round(T, 2)) for L, T in zip(L_values, T_values)]
+
+        return render_template("pendulum_table.html", data=data, g=g)
+
+    except Exception as e:
+        return render_template("pendulum_table.html", error=str(e))
 
 @app.route("/", methods=["GET", "POST"])
 def index():
